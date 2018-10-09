@@ -102,7 +102,8 @@ public class BankPage {
 				Label accountN = new Label("Enter Account No: "); 
 				p.add(accountN);
 				
-				TextField input = new TextField();
+				//NEEDS TO CHANGE BY IMPLEMENTING IT ELSE WHERE
+				final TextField input = new TextField();
 				p.add(input);
 				
 				Button submit = new Button("Submit AcNo");
@@ -119,7 +120,7 @@ public class BankPage {
 				name.setBackground(Color.CYAN);
 				acc.add(name);
 				
-				TextField nom = new TextField();
+				final TextField nom = new TextField();
 				nom.setBackground(Color.CYAN);
 				acc.add(nom);
 				
@@ -151,38 +152,55 @@ public class BankPage {
 				butt.setBackground(Color.ORANGE);
 				A.add(butt, BorderLayout.SOUTH);
 			
+				
 //				Connection conn = null; 
 //				Statement stmt = null; 
 				
 				//NEED NEW ACTION LISTENER TO BE HERE
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					
-					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "password");
-					stmt = conn.createStatement();
-					System.out.println(input.getText());
-					String getName = "SELECT * from account where AcNo = " + input.getText(); //+ INPUTFIELD
-//					String sqlUpdate = "insert into training values(8, 'Moo', 2)";
-//					String sqlAlter = "update training set Name='Man' where Id = 3";
-//					stmt.executeUpdate(getName);
-//					stmt.executeUpdate(sqlAlter);
-					ResultSet rs = stmt.executeQuery(getName);
-					
-					while(rs.next())
+				submit.addActionListener(new ActionListener()
+						{
+					public void actionPerformed(ActionEvent event)
 					{
-						int id = rs.getInt(1);
-						String name2 = rs.getString(2);
-						String address2 = rs.getString(3);
-						System.out.println("AcNo: " + id);
-						System.out.println("Name: " + name2);
-						System.out.println("Address: " + address2);
-						System.out.println("");
+			
+						try {
+							Class.forName("com.mysql.cj.jdbc.Driver");
+							
+							conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "password");
+							stmt = conn.createStatement();
+							System.out.println(input.getText());
+							String getName = "SELECT * from account where AcNo = " + input.getText(); //+ INPUTFIELD
+//							String sqlUpdate = "insert into training values(8, 'Moo', 2)";
+//							String sqlAlter = "update training set Name='Man' where Id = 3";
+//							stmt.executeUpdate(getName);
+//							stmt.executeUpdate(sqlAlter);
+							ResultSet rs = stmt.executeQuery(getName);
+							
+							while(rs.next())
+							{
+								int id = rs.getInt(1);
+								String name2 = rs.getString(2);
+								String address2 = rs.getString(3);
+								System.out.println("AcNo: " + id);
+								System.out.println("Name: " + name2);
+								
+								//FINAL so need to change all the format 
+								nom.setText(name2);
+								
+								
+								System.out.println("Address: " + address2);
+								System.out.println("");
+								
+							}
+							
+							rs.close();
+							stmt.close();
+							conn.close();
+						}catch(Exception se) {}
 					}
-					
-					rs.close();
-					stmt.close();
-					conn.close();
-				}catch(Exception se) {}
+						});
+				
+				
+
 			
 				
 			}
