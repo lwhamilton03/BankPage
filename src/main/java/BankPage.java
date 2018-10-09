@@ -9,9 +9,16 @@ import java.awt.Panel;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class BankPage {
 
+	Connection conn = null; 
+	Statement stmt = null; 
+	
 	public void createBankPage()
 	{
 		Frame F = new Frame("home"); 
@@ -143,6 +150,41 @@ public class BankPage {
 				Button butt = new Button("DEPOSIT");
 				butt.setBackground(Color.ORANGE);
 				A.add(butt, BorderLayout.SOUTH);
+			
+//				Connection conn = null; 
+//				Statement stmt = null; 
+				
+				//NEED NEW ACTION LISTENER TO BE HERE
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					
+					conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "password");
+					stmt = conn.createStatement();
+					System.out.println(input.getText());
+					String getName = "SELECT * from account where AcNo = " + input.getText(); //+ INPUTFIELD
+//					String sqlUpdate = "insert into training values(8, 'Moo', 2)";
+//					String sqlAlter = "update training set Name='Man' where Id = 3";
+//					stmt.executeUpdate(getName);
+//					stmt.executeUpdate(sqlAlter);
+					ResultSet rs = stmt.executeQuery(getName);
+					
+					while(rs.next())
+					{
+						int id = rs.getInt(1);
+						String name2 = rs.getString(2);
+						String address2 = rs.getString(3);
+						System.out.println("AcNo: " + id);
+						System.out.println("Name: " + name2);
+						System.out.println("Address: " + address2);
+						System.out.println("");
+					}
+					
+					rs.close();
+					stmt.close();
+					conn.close();
+				}catch(Exception se) {}
+			
+				
 			}
 		});
 		
