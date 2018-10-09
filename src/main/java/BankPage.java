@@ -27,12 +27,12 @@ public class BankPage {
 		createAccount.setBackground(Color.BLUE);
 		Button depositeMoney = new Button("Deposite Money");
 		depositeMoney.setBackground(Color.green);
-		Button withdrawMoeny = new Button("Withdraw"); 
-		withdrawMoeny.setBackground(Color.PINK); 
+		Button withdrawMoney = new Button("Withdraw"); 
+		withdrawMoney.setBackground(Color.PINK); 
 		
 		homePage.add(createAccount);
 		homePage.add(depositeMoney);
-		homePage.add(withdrawMoeny);
+		homePage.add(withdrawMoney);
 		
 		createAccount.addActionListener(new ActionListener()
 				{
@@ -147,7 +147,7 @@ public class BankPage {
 		});
 		
 	
-	withdrawMoeny.addActionListener(new ActionListener()
+	withdrawMoney.addActionListener(new ActionListener()
 	{
 		public void actionPerformed(ActionEvent event)
 		{
